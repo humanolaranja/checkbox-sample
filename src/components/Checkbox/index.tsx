@@ -22,10 +22,8 @@ interface IProps {
 export const Checkbox: React.FC<IProps> = ({ name, selected, onClick }: IProps) => {
     return (
         <CheckboxContainer onClick={() => onClick(name)}>
-            <>
             {selected && <SelectedContainer> x </SelectedContainer>}
             <strong>{name}</strong>
-            </>
         </CheckboxContainer>
     )
 }
