@@ -1,26 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import { Checkbox } from './components/Checkbox';
 
-function App() {
+export const App = () => {
+  const [elements, setElements] = useState<string[]>([]);
+  const [selectedElements, setSelectedElements] = useState<string[]>([]);
+
+  const isSelected = (element: string) => {
+    return selectedElements.includes(element);
+  }
+
+  const changeElementSelection = (element: string) => {
+    if(isSelected(element)) {
+      const newSelectedElements = selectedElements.filter(e => e !== element)
+      setSelectedElements(newSelectedElements)
+    } else {
+      const newSelectedElements = [...selectedElements, element]
+      setSelectedElements(newSelectedElements)
+    }
+  }
+
+  useEffect(() => {
+    const elementsToBeGetFromService: string[] = ['element1', 'element2', 'element3']
+    setElements(elementsToBeGetFromService)
+  }, [setElements])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {elements.map((element) => (
+        <Checkbox key={element} name={element} selected={isSelected(element)} onClick={changeElementSelection} />
+      ))}
     </div>
-  );
+  )
 }
 
 export default App;
